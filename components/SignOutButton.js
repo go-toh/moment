@@ -1,27 +1,28 @@
-import Button from '@mui/material/Button';
-import { getAuth, signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { useSignInState } from '../contexts/SignInStateProvider';
+import { auth } from "../src/firebaseConfig";
+import Button from '@mui/material/Button';
 
 function SignOutButton() {
-    const { userState, setSignOutState, setInitUser } = useSignInState();
-    const isSignIn = userState.isSignIn;
+    const { userState } = useSignInState();
+    const isSignIn = userState;
+    
     const firebaseSignOut = () => {
-        const auth = getAuth();
         signOut(auth).then(() => {
-            setSignOutState();
-            setInitUser();
             console.log("sign out");
         }).catch((error) => {
             console.log(error);
         });
     }
     
-  return <Button 
+    return (
+        <Button 
             variant="contained"
             onClick={firebaseSignOut}
             disabled={!isSignIn}>
             Sign Out
-        </Button>;
+        </Button>
+    );
 }
 
 export default SignOutButton;

@@ -1,30 +1,31 @@
-import React, { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "../src/firebaseConfig";
 
 const SignInStateContext = createContext();
 export const useSignInState = () => useContext(SignInStateContext);
 
 function SignInStateProvider({ children }) {
-    const [userState, setUserState] = useState({
-        isSignIn: false,
-        displayName: "",
-        email: "",
-        photoURL: "",
-    });
+    const [userState, setUserState] = useState();
 
-    const setUser = user => setUserState(user);
-
-    const setSignOutState = () => setUserState({ ...userState, isSignIn: false });
-
-    const setInitUser = () => setUserState({
-        isSignIn: false,
-        displayName: "",
-        email: "",
-        photoURL: "",
-    })
-    console.log(userState);
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if(user) {
+                console.log("onAuthChanged signIn");
+                setUserState({
+                    displayName: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL,
+                });
+            } else {
+                console.log("onAuthChanged not signIn");
+                setUserState();
+            }
+        }); 
+    }, []);
 
     return (
-        <SignInStateContext.Provider value={{ userState, setUser, setSignOutState, setInitUser }}>
+        <SignInStateContext.Provider value={{ userState }}>
             { children }
         </SignInStateContext.Provider>
     );
