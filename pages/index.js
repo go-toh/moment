@@ -1,7 +1,11 @@
 import Head from 'next/head'
-import GoogleSignInButton from '../components/FirebaseAuthGoogle';
+import router from 'next/router';
+import GoogleSignInButton from '../components/GoogleSignInButton';
+import { useSignInState } from '../contexts/SignInStateProvider';
 
-export default function Home() {
+export default function Index() {
+  const { userState } = useSignInState();
+  if(userState) router.push('/home');
   return (
     <>
       <Head>
