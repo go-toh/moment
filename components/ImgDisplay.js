@@ -14,7 +14,7 @@ function ImgDisplay() {
 
     useEffect(() => {
         if(userState) {
-            const gsReference = ref(storage, 'gs://moment-1c456.appspot.com/04.jpg');
+            const gsReference = ref(storage, 'gs://moment-1c456.appspot.com/1.jpg');
             getDownloadURL(gsReference).then((url) => { setImgURL(url) });
         } else {
             setImgURL("");
