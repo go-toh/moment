@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import SignInButton from '../components/SignInButton';
 import SignOutButton from '../components/SignOutButton';
-import UserProf from '../components/UserProf';
-import ImgDisplay from '../components/ImgDisplay';
+import PostList from '../components/PostList';
+import BottomAppBar from '../components/AppBar';
 
 export default function Home() {
   return (
@@ -14,8 +14,8 @@ export default function Home() {
       </Head>
       <SignInButton />
       <SignOutButton />
-      <UserProf />
-      <ImgDisplay />
+      <PostList />
+      <BottomAppBar />
     </>
   );
 }

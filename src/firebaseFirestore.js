@@ -12,5 +12,6 @@ export const createAccount = async(user) => {
         displayName: user.displayName,
         uid: user.uid,
         email: user.email,
+        photoURL: user.photoURL
     });
 };
