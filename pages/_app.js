@@ -27,7 +27,6 @@ export default function MyApp(props) {
         </ThemeProvider>
       </CacheProvider>
     </SignInStateProvider>
-    
   );
 }
 

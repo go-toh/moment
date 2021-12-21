@@ -10,8 +10,6 @@ function PostList() {
                 postData.map((post, index) => <Post key={index}{...post}/>)
             }
         </Box>
-
-        
     )
 }
 

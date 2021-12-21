@@ -5,7 +5,7 @@ import { useSignInState } from '../contexts/SignInStateProvider';
 
 export default function Index() {
   const { userState } = useSignInState();
-  if(userState) router.push('/home');
+  if(userState && router.pathname !== '/home') router.push('/home');
   return (
     <>
       <Head>
