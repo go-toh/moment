@@ -1,13 +1,14 @@
 import { useAppState } from '../contexts/AppStateProvider';
-import PostList from "./PostList";
+import SpotList from "./SpotList";
 import Setting from './Setting';
+import { Box } from '@mui/material';
 
 function MainDisplay() {
     const { appState } = useAppState();
-    const resultDisplay = () => {
+    const changeDisplay = () => {
         switch (appState) {
             case "Home":
-            return <PostList />;
+            return <SpotList />;
             case "Serch":
             return <div></div>;
             case "Post":
@@ -17,13 +18,15 @@ function MainDisplay() {
             case "Setting":
             return <Setting />;
             default:
-            return <PostList />;
+            return <SpotList />;
       }
     }
-    console.log(resultDisplay());
     return (
         <>
-            { resultDisplay() }
+            <Box sx={{ mb:6 }}>
+                { changeDisplay() }  
+            </Box>
+            
         </>
     )
 }

@@ -1,16 +1,16 @@
 import { Box } from "@mui/system";
 import postData from "../public/postData.json";
-import Post from "./Post";
+import Spot from "./Spot";
 
-function PostList() {
+function SpotList() {
     
     return (
         <Box sx={{ m:1, display:'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
             {
-                postData.map((post, index) => <Post key={index}{...post}/>)
+                postData.map((post, index) => <Spot key={index}{...post}/>)
             }
         </Box>
     )
 }
 
-export default PostList;
+export default SpotList;

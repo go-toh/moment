@@ -7,7 +7,11 @@
         "photoURL" : "https://lh3.googleusercontent.com/a-/AOh14GgQlKj2_Am-NMV2lkooB5XRN46uHfSUlSu8ebpX=s96-c",
         "title" : "ダイヤモンド富士！",
         "imgURL" : "gs://moment-1c456.appspot.com/1.jpg",
-        "postTime" : "2021年10月23日"
+        "postTime" : "2021年10月23日",
+        "shootingTime" : "2021-10-22-09-12",
+        "season" : "冬",
+        "weather" : "快晴",
+        "area" : "山梨県"
     },
     {   
         "postID" : "2",
@@ -16,7 +20,11 @@
         "photoURL" : "https://lh3.googleusercontent.com/a-/AOh14GgQlKj2_Am-NMV2lkooB5XRN46uHfSUlSu8ebpX=s96-c",
         "title" : "白鷺",
         "imgURL" : "gs://moment-1c456.appspot.com/2.jpg",
-        "postTime" : "2021年11月10日"
+        "postTime" : "2021年11月10日",
+        "shootingTime" : "2021-10-22-09-12",
+        "season" : "冬",
+        "weather" : "快晴",
+        "area" : "山梨県"
     },
     {   
         "postID" : "3",
@@ -25,7 +33,11 @@
         "photoURL" : "https://lh3.googleusercontent.com/a-/AOh14GgQlKj2_Am-NMV2lkooB5XRN46uHfSUlSu8ebpX=s96-c",
         "title" : "青空",
         "imgURL" : "gs://moment-1c456.appspot.com/3.jpg",
-        "postTime" : "2021年12月10日"
+        "postTime" : "2021年12月10日",
+        "shootingTime" : "2021-10-22-09-12",
+        "season" : "冬",
+        "weather" : "快晴",
+        "area" : "山梨県"
     },
     {   
         "postID" : "4",
@@ -34,6 +46,10 @@
         "photoURL" : "https://lh3.googleusercontent.com/a-/AOh14GgQlKj2_Am-NMV2lkooB5XRN46uHfSUlSu8ebpX=s96-c",
         "title" : "ビーチ",
         "imgURL" : "gs://moment-1c456.appspot.com/4.jpg",
-        "postTime" : "2021年12月23日"
+        "postTime" : "2021年12月23日",
+        "shootingTime" : "2021-10-22-09-12",
+        "season" : "冬",
+        "weather" : "快晴",
+        "area" : "山梨県"
     }
 ]
