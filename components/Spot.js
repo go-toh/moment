@@ -10,9 +10,15 @@ import {ref, getDownloadURL } from "firebase/storage";
 import { storage } from '../src/firebaseConfig';
 import { useSignInState } from '../contexts/SignInStateProvider';
 
-function Spot({imgURL, photoURL, title, displayName, postTime}) {
+function Spot(spot) {
+    const {spotID, imgURL, photoURL, title, displayName, postTime} = spot;
     const [getImgURL, setGetImgURL] = useState("");
     const { userState } = useSignInState();
+
+    const clickActionArea = () => {
+        console.log(spotID + "click");
+    };
+ 
     useEffect(() => {
         if(userState) {
             const gsReference = ref(storage, imgURL);
@@ -22,9 +28,8 @@ function Spot({imgURL, photoURL, title, displayName, postTime}) {
         }
     }, [userState]);
     return (
-        <Card sx={{ maxWidth: 350, minWidth: 350,
-                    m : 2 }}>
-            <CardActionArea>
+        <Card sx={{ maxWidth: 350, minWidth: 330, m: 1 }}>
+            <CardActionArea onClick={ clickActionArea }>
                 <CardMedia
                 component="img"
                 height="220"
@@ -37,9 +42,9 @@ function Spot({imgURL, photoURL, title, displayName, postTime}) {
             }
             title={ title }
             subheader={
-                <Box sx={{ display:'flex' }}>
+                <Box sx={{ display:'flex',  justifyContent: 'space-between' }}>
                     <Typography>{ displayName }</Typography>
-                    <Typography sx={{pl:3}}>{ postTime }</Typography>
+                    <Typography >{ postTime }</Typography>
                 </Box>
             }
             />

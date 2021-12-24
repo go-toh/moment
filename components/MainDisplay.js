@@ -1,12 +1,12 @@
-import { useAppState } from '../contexts/AppStateProvider';
+import { useNavigationBarState } from '../contexts/NavigationBarStateProvider';
 import SpotList from "./SpotList";
 import Setting from './Setting';
 import { Box } from '@mui/material';
 
 function MainDisplay() {
-    const { appState } = useAppState();
+    const { naviBarState } = useNavigationBarState();
     const changeDisplay = () => {
-        switch (appState) {
+        switch (naviBarState) {
             case "Home":
             return <SpotList />;
             case "Serch":
@@ -23,7 +23,7 @@ function MainDisplay() {
     }
     return (
         <>
-            <Box sx={{ mb:6 }}>
+            <Box sx={{ mb: 7 }}>
                 { changeDisplay() }  
             </Box>
             

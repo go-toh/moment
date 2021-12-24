@@ -1,7 +1,7 @@
 
 [
     {   
-        "postID" : "1",
+        "spotID" : "1",
         "uid" : "hYgsboz4gfXbxWgOhShvflC4yBr2",
         "displayName" : "m go-toh",
         "photoURL" : "https://lh3.googleusercontent.com/a-/AOh14GgQlKj2_Am-NMV2lkooB5XRN46uHfSUlSu8ebpX=s96-c",
@@ -11,10 +11,11 @@
         "shootingTime" : "2021-10-22-09-12",
         "season" : "冬",
         "weather" : "快晴",
-        "area" : "山梨県"
+        "area" : "山梨県",
+        "spotText" : "testtesttest"
     },
     {   
-        "postID" : "2",
+        "spotID" : "2",
         "uid" : "hYgsboz4gfXbxWgOhShvflC4yBr2",
         "displayName" : "m go-toh",
         "photoURL" : "https://lh3.googleusercontent.com/a-/AOh14GgQlKj2_Am-NMV2lkooB5XRN46uHfSUlSu8ebpX=s96-c",
@@ -24,10 +25,11 @@
         "shootingTime" : "2021-10-22-09-12",
         "season" : "冬",
         "weather" : "快晴",
-        "area" : "山梨県"
+        "area" : "山梨県",
+        "spotText" : "testtesttest"
     },
     {   
-        "postID" : "3",
+        "spotID" : "3",
         "uid" : "OtVVHrUFeBQXFngidVil0gjEjAf1",
         "displayName" : "m go-toh",
         "photoURL" : "https://lh3.googleusercontent.com/a-/AOh14GgQlKj2_Am-NMV2lkooB5XRN46uHfSUlSu8ebpX=s96-c",
@@ -37,10 +39,11 @@
         "shootingTime" : "2021-10-22-09-12",
         "season" : "冬",
         "weather" : "快晴",
-        "area" : "山梨県"
+        "area" : "山梨県",
+        "spotText" : "testtesttest"
     },
     {   
-        "postID" : "4",
+        "spotID" : "4",
         "uid" : "OtVVHrUFeBQXFngidVil0gjEjAf1",
         "displayName" : "m go-toh",
         "photoURL" : "https://lh3.googleusercontent.com/a-/AOh14GgQlKj2_Am-NMV2lkooB5XRN46uHfSUlSu8ebpX=s96-c",
@@ -50,6 +53,7 @@
         "shootingTime" : "2021-10-22-09-12",
         "season" : "冬",
         "weather" : "快晴",
-        "area" : "山梨県"
+        "area" : "山梨県",
+        "spotText" : "testtesttest"
     }
 ]

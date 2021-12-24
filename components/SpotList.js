@@ -1,13 +1,13 @@
 import { Box } from "@mui/system";
-import postData from "../public/postData.json";
+import SpotData from "../public/spotData.json";
 import Spot from "./Spot";
 
 function SpotList() {
     
     return (
-        <Box sx={{ m:1, display:'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <Box sx={{ mx: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
             {
-                postData.map((post, index) => <Spot key={index}{...post}/>)
+                SpotData.map((spot, index) => <Spot key={index}{...spot}/>)
             }
         </Box>
     )
