@@ -28,7 +28,7 @@ function Spot(spot) {
         }
     }, [userState]);
     return (
-        <Card sx={{ maxWidth: 350, minWidth: 330, m: 1 }}>
+        <Card sx={{ maxWidth: 340, minWidth: 340, m: 1 }}>
             <CardActionArea onClick={ clickActionArea }>
                 <CardMedia
                 component="img"
