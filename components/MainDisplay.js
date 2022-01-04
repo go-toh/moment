@@ -1,6 +1,8 @@
 import { useNavigationBarState } from '../contexts/NavigationBarStateProvider';
 import SpotList from "./SpotList";
 import Setting from './Setting';
+import SearchPost from './SearchPost';
+import Post from './Post';
 import { Box } from '@mui/material';
 
 function MainDisplay() {
@@ -10,9 +12,10 @@ function MainDisplay() {
             case "Home":
             return <SpotList />;
             case "Serch":
-            return <div></div>;
+            console.log("SearchPost")
+            return <SearchPost />;
             case "Post":
-            return <div></div>;
+            return <Post />;
             case "MyPage":
             return <div></div>;
             case "Setting":

@@ -19,27 +19,27 @@ function BottomAppBar() {
     <Paper sx={{ position: 'fixed', bottom: 0 , left: 0, right: 0 }} elevation={3}>  
       <BottomNavigation value={ naviBarState } onChange={ handleChange }>
         <BottomNavigationAction
-          label="Home"
+          label="ホーム"
           value="Home"
           icon={<HomeIcon />}
         />
         <BottomNavigationAction
-          label="Serch"
+          label="検索"
           value="Serch"
           icon={<SearchIcon />}
         />
         <BottomNavigationAction
-          label="Post"
+          label="投稿"
           value="Post"
           icon={<AddIcon />}
         />
         <BottomNavigationAction 
-          label="MyPage" 
+          label="マイページ" 
           value="MyPage" 
           icon={<PersonIcon />} 
         />
         <BottomNavigationAction
-          label="Setting" 
+          label="設定" 
           value="Setting" 
           icon={<SettingsIcon />} 
         />
