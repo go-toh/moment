@@ -15,3 +15,7 @@ export const createAccount = async(user) => {
         photoURL: user.photoURL
     });
 };
+
+export const postNewSpot = () => {
+    
+}
