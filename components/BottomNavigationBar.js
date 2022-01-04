@@ -8,7 +8,7 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
 import { useNavigationBarState  } from "../contexts/NavigationBarStateProvider";
 
-function BottomAppBar() {
+function BottomNavigationBar() {
   const { naviBarState, setNaviBarState } = useNavigationBarState ();
 
   const handleChange = (event, newValue) => {
@@ -47,4 +47,4 @@ function BottomAppBar() {
     </Paper>
   )};
 
-export default BottomAppBar;
+export default BottomNavigationBar;

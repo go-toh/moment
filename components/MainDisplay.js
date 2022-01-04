@@ -26,10 +26,9 @@ function MainDisplay() {
     }
     return (
         <>
-            <Box sx={{ mb: 7 }}>
+            <Box sx={{ mb: 7, width: '100%', height: '100%'}}>
                 { changeDisplay() }  
             </Box>
-            
         </>
     )
 }
