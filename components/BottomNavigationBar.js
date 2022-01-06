@@ -34,7 +34,7 @@ function BottomNavigationBar() {
           icon={<AddIcon />}
         />
         <BottomNavigationAction 
-          label="マイページ" 
+          label="インフォ" 
           value="MyPage" 
           icon={<PersonIcon />} 
         />
