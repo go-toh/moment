@@ -7,12 +7,11 @@ import { Box } from '@mui/material';
 
 function MainDisplay() {
     const { naviBarState } = useNavigationBarState();
-    const changeDisplay = () => {
+    const ChangeDisplay = () => {
         switch (naviBarState) {
             case "Home":
             return <SpotList />;
             case "Serch":
-            console.log("SearchPost")
             return <SearchPost />;
             case "Post":
             return <Post />;
@@ -27,7 +26,7 @@ function MainDisplay() {
     return (
         <>
             <Box sx={{ mb: 7, width: '100%', height: '100%'}}>
-                { changeDisplay() }  
+                <ChangeDisplay />
             </Box>
         </>
     )
