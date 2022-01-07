@@ -105,7 +105,7 @@ function Spot(spot) {
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
                     {spotTitle}
                 </BootstrapDialogTitle>
-                <DialogContent dividers={'paper'}>
+                <DialogContent dividers>
                 <Image src={getImgURL}width={340} height={220} /> 
                 <Typography gutterBottom>
                     {'説明 : ' + spotExplain}
