@@ -1,5 +1,5 @@
 import { createContext, useCallback, useState, useContext, useEffect } from "react";
-import { getSpots } from '../src/firebaseFirestore';
+import { getSpots } from "../src/firebaseFirestore";
 
 const SpotDataStateContext = createContext();
 export const useSpotDataState = () => useContext(SpotDataStateContext);
@@ -7,6 +7,7 @@ export const useSpotDataState = () => useContext(SpotDataStateContext);
 function SpotDataStateProvider({ children }) {
     const [spots, setSpots] = useState([]);
     const [filterSpots, setFilterSpots] = useState([]);
+    const [mySpots, setMySpots] = useState([]);
 
     const spotsData = useCallback(async() => {
         const getSpotData = (await getSpots()).docs;
@@ -22,11 +23,15 @@ function SpotDataStateProvider({ children }) {
         setFilterSpots(spots.filter(spot => spot.spotArea == area || 
                                             spot.spotSeason == season ||
                                             spot.spotTime == time ||
-                                            spot.Weather == weather));
+                                            spot.spotWeather == weather));
+    }
+
+    const exeMySpots = (uid) => {
+        setMySpots(spots.filter(spot => spot.uid == uid));
     }
 
     return (
-        <SpotDataStateContext.Provider value={{spots, filterSpots, exefilterSpots}}>
+        <SpotDataStateContext.Provider value={{spots, filterSpots, mySpots, exefilterSpots, exeMySpots}}>
             {children}
         </SpotDataStateContext.Provider>
     );
