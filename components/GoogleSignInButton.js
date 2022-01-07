@@ -1,6 +1,6 @@
-import GoogleIcon from '@mui/icons-material/Google';
-import Button from '@mui/material/Button';
-import { firebaseAuthSignInPopup } from '../src/firebaseAuth';
+import GoogleIcon from "@mui/icons-material/Google";
+import Button from "@mui/material/Button";
+import { firebaseAuthSignInPopup } from "../src/firebaseAuth";
 
 function GoogleSignInButton() {
     return (

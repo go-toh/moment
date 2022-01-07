@@ -1,5 +1,5 @@
-import SignInButton from '../components/SignInButton';
-import SignOutButton from '../components/SignOutButton';
+import SignInButton from "../components/SignInButton";
+import SignOutButton from "../components/SignOutButton";
 
 function Setting() {
     return (

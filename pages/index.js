@@ -1,11 +1,11 @@
-import Head from 'next/head'
-import router from 'next/router';
-import GoogleSignInButton from '../components/GoogleSignInButton';
-import { useSignInState } from '../contexts/SignInStateProvider';
+import Head from "next/head"
+import router from "next/router";
+import GoogleSignInButton from "../components/GoogleSignInButton";
+import { useSignInState } from "../contexts/SignInStateProvider";
 
 export default function Index() {
   const { userState } = useSignInState();
-  if(userState && router.pathname !== '/home') router.push('/home');
+  if(userState && router.pathname !== "/home") router.push("/home");
   return (
     <>
       <Head>
