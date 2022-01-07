@@ -1,20 +1,9 @@
 import { Box } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
 import Spot from "./Spot";
-import { getSpots } from '../src/firebaseFirestore';
+import { useSpotDataState } from '../contexts/SpotDataStateProvider';
 
 function SpotList() {
-    const [spots, setSpots] = useState([]);
-
-    const spotsData = useCallback(async() => {
-        const getSpotData = (await getSpots()).docs;
-        const dataArray = getSpotData.map(doc => doc.data());
-        setSpots(dataArray);
-    }, []);
-
-    useEffect(() => {
-        spotsData();
-    }, [setSpots, spotsData]);
+    const { spots } = useSpotDataState();
 
     return (
         <Box sx={{ mx: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
