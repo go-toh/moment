@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
-import { useSignInState } from '../contexts/SignInStateProvider';
-import Button from '@mui/material/Button';
+import { useRouter } from "next/router";
+import { useSignInState } from "../contexts/SignInStateProvider";
+import Button from "@mui/material/Button";
 
 function SignInButton() {
     const router = useRouter();
@@ -9,7 +9,7 @@ function SignInButton() {
     return (
         <Button
             variant="contained"
-            onClick={()=>router.push('/')}
+            onClick={()=>router.push("/")}
             disabled={ isSignIn }>
             Sign In
         </Button>

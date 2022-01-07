@@ -1,7 +1,7 @@
 import { signOut } from "firebase/auth";
-import { useSignInState } from '../contexts/SignInStateProvider';
+import { useSignInState } from "../contexts/SignInStateProvider";
 import { auth } from "../src/firebaseConfig";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 
 function SignOutButton() {
     const { userState } = useSignInState();
