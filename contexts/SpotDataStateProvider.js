@@ -12,12 +12,20 @@ function SpotDataStateProvider({ children }) {
     const spotsData = useCallback(async() => {
         const getSpotData = (await getSpots()).docs;
         const dataArray = getSpotData.map(doc => doc.data());
+        console.log("callback");
         setSpots(dataArray);
     }, []);
 
     useEffect(() => {
         spotsData();
     }, [setSpots, spotsData]);
+
+    const updateSpots = async() => {
+        const getSpotData = (await getSpots()).docs;
+        const dataArray = getSpotData.map(doc => doc.data());
+        console.log("getSpot");
+        setSpots(dataArray);
+    }
 
     const exefilterSpots = (area, season, time, weather) => {
         setFilterSpots(spots.filter(spot => spot.spotArea == area || 
@@ -31,7 +39,7 @@ function SpotDataStateProvider({ children }) {
     }
 
     return (
-        <SpotDataStateContext.Provider value={{spots, filterSpots, mySpots, exefilterSpots, exeMySpots}}>
+        <SpotDataStateContext.Provider value={{spots, filterSpots, mySpots, exefilterSpots, exeMySpots, updateSpots}}>
             {children}
         </SpotDataStateContext.Provider>
     );

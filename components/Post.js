@@ -16,6 +16,7 @@ import { v4 } from "uuid"
 import { useSignInState } from "../contexts/SignInStateProvider";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { useSpotDataState } from "../contexts/SpotDataStateProvider";
 
 const Input = styled("input")({
   display: "none"
@@ -33,6 +34,7 @@ function Post() {
   const [isComplete, setIsComplete] = useState(false);
   const { userState } = useSignInState();
   const [open, setOpen] = useState(false);
+  const { updateSpots } = useSpotDataState();
 
   useEffect(() => {
     if(spotImageURL && spotArea && spotSeason && spotTime && spotWeather) {
@@ -93,7 +95,12 @@ function Post() {
     setSpotTime("");
     setSpotWeather("");
     setIsComplete(false);
+    updateSpots();
   }
+
+  const handleClose = () => {
+      setOpen(false);
+    }
 
   const ImageDisplay = () => {
     if(spotImageURL) {
@@ -107,10 +114,6 @@ function Post() {
         <Skeleton variant="rectangular" width={340} height={220} sx={{m: 1, mt: 3}}/>
       );
     }
-  }
-
-  const handleClose = () => {
-    setOpen(false);
   }
 
   return (

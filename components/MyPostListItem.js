@@ -1,18 +1,19 @@
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-import Skeleton from "@mui/material/Skeleton";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from '@mui/material/IconButton';
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
+import Typography from "@mui/material/Typography";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
+import Skeleton from "@mui/material/Skeleton";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
-import { Box } from "@mui/system";
-import { CardActionArea } from "@mui/material";
 import { useEffect, useState } from "react";
 import {ref, getDownloadURL } from "firebase/storage";
 import { storage } from "../src/firebaseConfig";
@@ -57,18 +58,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     onClose: PropTypes.func.isRequired,
   };
 
-function Spot(spot) {
+function MyPostListItem(spot) {
     const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime} = spot;
-    const [getImgURL, setGetImgURL] = useState("");
-    const [displayTime, setDisplayTime] = useState("");
-    const { userState } = useSignInState();
     const [open, setOpen] = useState(false);
+    const [getImgURL, setGetImgURL] = useState("");
+    
+    const { userState } = useSignInState();
 
-    const clickActionArea = () => {
-        setOpen(true);
-        console.log("click");
-    };
- 
     useEffect(() => {
         if(userState) {
             const gsReference = ref(storage, spotImageURL);
@@ -78,26 +74,28 @@ function Spot(spot) {
         }
     }, [userState]);
 
-    useEffect(() => {
-        const date = postTime.toDate();
-        const time = date.getFullYear()
-                            + "/" + ("0" + (date.getMonth() + 1)).slice(-2)
-                            + "/" + ("0" + date.getDate()).slice(-2);
-        setDisplayTime(time);
-    }, [])
+    const handleDeleteClick = () => {
+        console.log("click");
+    } 
+
+    const handleItemClick = () => {
+        console.log("click");
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        console.log("click");
+        setOpen(false);
+      };
 
     const CardImage = () => {
         if(getImgURL) return <Image src={getImgURL}width={340} height={220} /> 
         else return <Skeleton variant="rectangular" width={340} height={220} animation="wave"/>
     }
-    
-    const handleClose = () => {
-        setOpen(false);
-      };
-    
+
     return (
         <>
-            <BootstrapDialog
+         <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={open}
@@ -124,26 +122,29 @@ function Spot(spot) {
                 </Typography>
                 </DialogContent>
         </BootstrapDialog>
-
-            <Card sx={{ maxWidth: 340, minWidth: 340, m: 1 }}>
-                <CardActionArea onClick={ clickActionArea }>
-                <CardImage />
-                <CardHeader
-                avatar={
-                    <Avatar alt="avatar image" src={ photoURL } />
-                }
-                title={ spotTitle }
-                subheader={
-                    <Box sx={{ display:"flex",  justifyContent: "space-between" }}>
-                        <Typography>{ displayName }</Typography>
-                        <Typography >{ displayTime }</Typography>
-                    </Box>
-                }
+        <ListItem
+            secondaryAction={
+                <IconButton
+                    aria-label="delete spot"
+                    component="span"
+                    edge="end"
+                    onClick={ handleDeleteClick } >
+                    <DeleteIcon />
+                </IconButton> }
+                disablePadding
+            >
+            
+            <ListItemButton onClick={ handleItemClick }>
+              <ListItemAvatar>
+                <Avatar
+                  src= { photoURL }
                 />
-                </CardActionArea>
-            </Card>
+              </ListItemAvatar>
+              <ListItemText primary={ spotTitle } />
+            </ListItemButton>
+        </ListItem>
         </>
-    );
+    )
 }
 
-export default Spot;
+export default MyPostListItem;
