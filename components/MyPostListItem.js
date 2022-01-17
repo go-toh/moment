@@ -8,16 +8,17 @@ import IconButton from '@mui/material/IconButton';
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import Typography from "@mui/material/Typography";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
-import Skeleton from "@mui/material/Skeleton";
+import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import {ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../src/firebaseConfig";
+import { useSpotDataState } from "../contexts/SpotDataStateProvider";
 import { useSignInState } from "../contexts/SignInStateProvider";
+import { deleteSpot } from "../src/firebaseFirestore";
 import Image from "next/image";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -59,23 +60,15 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   };
 
 function MyPostListItem(spot) {
-    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime} = spot;
+    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime, spotGPS, docID, getImageURL} = spot;
     const [open, setOpen] = useState(false);
-    const [getImgURL, setGetImgURL] = useState("");
-    
-    const { userState } = useSignInState();
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-    useEffect(() => {
-        if(userState) {
-            const gsReference = ref(storage, spotImageURL);
-            getDownloadURL(gsReference).then((url) => { setGetImgURL(url) });
-        } else {
-            setGetImgURL("");
-        }
-    }, [userState]);
+    const { updateSpots } = useSpotDataState();
 
     const handleDeleteClick = () => {
-        console.log("click");
+        console.log("deleteClick");
+        setDeleteDialogOpen(true);
     } 
 
     const handleItemClick = () => {
@@ -88,9 +81,38 @@ function MyPostListItem(spot) {
         setOpen(false);
       };
 
-    const CardImage = () => {
-        if(getImgURL) return <Image src={getImgURL}width={340} height={220} /> 
-        else return <Skeleton variant="rectangular" width={340} height={220} animation="wave"/>
+    const handleDeleteDialogClose = () => {
+        setDeleteDialogOpen(false);
+    }
+
+    const deleteSpotButton = () => {
+        deleteSpot(docID);
+        setDeleteDialogOpen(false);
+        updateSpots();
+    }
+
+    const DeleteDialog = () => {
+      return (
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={handleDeleteDialogClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Use Google's location service?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Let Google help apps determine location. This means sending anonymous
+              location data to Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={deleteSpotButton}>削除</Button>
+          </DialogActions>
+        </Dialog>
+      )
     }
 
     return (
@@ -104,7 +126,7 @@ function MyPostListItem(spot) {
                     {spotTitle}
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                <Image src={getImgURL}width={340} height={220} /> 
+                <Image src={getImageURL}width={340} height={220} /> 
                 <Typography gutterBottom>
                     {"説明 : " + spotExplain}
                 </Typography>
@@ -122,6 +144,7 @@ function MyPostListItem(spot) {
                 </Typography>
                 </DialogContent>
         </BootstrapDialog>
+        <DeleteDialog />
         <ListItem
             secondaryAction={
                 <IconButton

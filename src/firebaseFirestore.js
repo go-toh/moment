@@ -1,5 +1,6 @@
 import { db } from "./firebaseConfig";
-import { doc, getDoc, getDocs, setDoc, collection, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, getDoc, getDocs, setDoc, deleteDoc, collection, updateDoc, arrayUnion } from "firebase/firestore";
+import { async } from "@firebase/util";
 
 export const isCreatedAccount = async(uid) => {
     const userDocRef = doc(db, "users", uid);
@@ -16,7 +17,7 @@ export const createAccount = async(user) => {
     });
 };
 
-export const postNewSpot = async(user, title, explain, area, season, time, weather, imageURL, nowTime) => {
+export const postNewSpot = async(user, title, explain, area, season, time, weather, imageURL, nowTime, GPS) => {
     const newRef = doc(collection(db, "spots"));
     console.log(newRef.id);
     await setDoc(newRef, {
@@ -30,7 +31,8 @@ export const postNewSpot = async(user, title, explain, area, season, time, weath
         spotTime: time,
         spotWeather: weather,
         spotImageURL: imageURL,
-        postTime: nowTime
+        postTime: nowTime,
+        spotGPS: GPS
     });
 
     await updateDoc(doc(db, "users", user.uid), {
@@ -41,4 +43,8 @@ export const postNewSpot = async(user, title, explain, area, season, time, weath
 export const getSpots = async() => {
     const spotsSnapshot = await getDocs(collection(db, "spots"));
     return spotsSnapshot;
+}
+
+export const deleteSpot = async(docID) => {
+    await deleteDoc(doc(db, "spots", docID));
 }

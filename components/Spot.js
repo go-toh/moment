@@ -2,11 +2,9 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-import Skeleton from "@mui/material/Skeleton";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
@@ -14,9 +12,6 @@ import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import { CardActionArea } from "@mui/material";
 import { useEffect, useState } from "react";
-import {ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../src/firebaseConfig";
-import { useSignInState } from "../contexts/SignInStateProvider";
 import Image from "next/image";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -58,10 +53,8 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   };
 
 function Spot(spot) {
-    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime} = spot;
-    const [getImgURL, setGetImgURL] = useState("");
+    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime, spotGPS, getImageURL} = spot;
     const [displayTime, setDisplayTime] = useState("");
-    const { userState } = useSignInState();
     const [open, setOpen] = useState(false);
 
     const clickActionArea = () => {
@@ -70,26 +63,12 @@ function Spot(spot) {
     };
  
     useEffect(() => {
-        if(userState) {
-            const gsReference = ref(storage, spotImageURL);
-            getDownloadURL(gsReference).then((url) => { setGetImgURL(url) });
-        } else {
-            setGetImgURL("");
-        }
-    }, [userState]);
-
-    useEffect(() => {
         const date = postTime.toDate();
         const time = date.getFullYear()
                             + "/" + ("0" + (date.getMonth() + 1)).slice(-2)
                             + "/" + ("0" + date.getDate()).slice(-2);
         setDisplayTime(time);
     }, [])
-
-    const CardImage = () => {
-        if(getImgURL) return <Image src={getImgURL}width={340} height={220} /> 
-        else return <Skeleton variant="rectangular" width={340} height={220} animation="wave"/>
-    }
     
     const handleClose = () => {
         setOpen(false);
@@ -106,7 +85,7 @@ function Spot(spot) {
                     {spotTitle}
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                <Image src={getImgURL}width={340} height={220} /> 
+                <Image src={getImageURL}width={340} height={220} /> 
                 <Typography gutterBottom>
                     {"説明 : " + spotExplain}
                 </Typography>
@@ -127,7 +106,7 @@ function Spot(spot) {
 
             <Card sx={{ maxWidth: 340, minWidth: 340, m: 1 }}>
                 <CardActionArea onClick={ clickActionArea }>
-                <CardImage />
+                <Image src={getImageURL}width={340} height={220} /> 
                 <CardHeader
                 avatar={
                     <Avatar alt="avatar image" src={ photoURL } />

@@ -1,5 +1,7 @@
 import { createContext, useCallback, useState, useContext, useEffect } from "react";
 import { getSpots } from "../src/firebaseFirestore";
+import {ref, getDownloadURL } from "firebase/storage";
+import { storage } from "../src/firebaseConfig";
 
 const SpotDataStateContext = createContext();
 export const useSpotDataState = () => useContext(SpotDataStateContext);
@@ -11,9 +13,11 @@ function SpotDataStateProvider({ children }) {
 
     const spotsData = useCallback(async() => {
         const getSpotData = (await getSpots()).docs;
-        const dataArray = getSpotData.map(doc => doc.data());
-        console.log("callback");
-        setSpots(dataArray);
+
+        getSpotData.forEach(async(doc) => {
+            const getImageURL = await getDownloadURL(ref(storage, doc.data().spotImageURL));
+            setSpots((spots) => [...spots, {...doc.data(), docID:doc.id, getImageURL:getImageURL}]);
+        })
     }, []);
 
     useEffect(() => {
@@ -22,9 +26,11 @@ function SpotDataStateProvider({ children }) {
 
     const updateSpots = async() => {
         const getSpotData = (await getSpots()).docs;
-        const dataArray = getSpotData.map(doc => doc.data());
-        console.log("getSpot");
-        setSpots(dataArray);
+
+        getSpotData.forEach(async(doc) => {
+            const getImageURL = await getDownloadURL(ref(storage, doc.data().spotImageURL));
+            setSpots((spots) => [...spots, {...doc.data(), docID:doc.id, getImageURL:getImageURL}]);
+        })
     }
 
     const exefilterSpots = (area, season, time, weather) => {

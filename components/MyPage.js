@@ -17,7 +17,6 @@ function MyPage() {
         <Box sx={{ mx: 1, display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {
-                //mySpots.map((spot, index)=> <Spot key={index}{...spot} />)
                 mySpots.map((spot, index) => <MyPostListItem key={index}{...spot} />)
             }
             </List>

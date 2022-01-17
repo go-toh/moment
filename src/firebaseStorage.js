@@ -11,3 +11,7 @@ export function uploadSpotImage(file, imageName) {
     console.log("Uploaded a blob or file!");
     });
 }
+
+export const deleteSpotImage = (spotImageURL) => {
+  
+}
