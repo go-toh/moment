@@ -19,6 +19,7 @@ import { useState } from "react";
 import { useSpotDataState } from "../contexts/SpotDataStateProvider";
 import { Link as MuiLink} from '@mui/material';
 import { deleteSpot } from "../src/firebaseFirestore";
+import { deleteSpotImage } from "../src/firebaseStorage";
 import Image from "next/image";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -87,6 +88,7 @@ function MyPostListItem(spot) {
 
     const deleteSpotButton = () => {
         deleteSpot(docID);
+        deleteSpotImage(spotImageURL);
         setDeleteDialogOpen(false);
         updateSpots();
     }
