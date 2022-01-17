@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import { CardActionArea } from "@mui/material";
+import { Link as MuiLink} from '@mui/material';
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
@@ -53,10 +54,9 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   };
 
 function Spot(spot) {
-    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime, spotGPS, getImageURL} = spot;
+    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime, spotGPS, getImageURL, spotDateTimeOriginal} = spot;
     const [displayTime, setDisplayTime] = useState("");
     const [open, setOpen] = useState(false);
-
     const clickActionArea = () => {
         setOpen(true);
         console.log("click");
@@ -73,7 +73,7 @@ function Spot(spot) {
     const handleClose = () => {
         setOpen(false);
       };
-    
+
     return (
         <>
             <BootstrapDialog
@@ -86,6 +86,9 @@ function Spot(spot) {
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                 <Image src={getImageURL}width={340} height={220} /> 
+                <Typography sx={{display: spotDateTimeOriginal ? "" : "none"}} gutterBottom>
+                    {"撮影日時 : " + spotDateTimeOriginal}
+                </Typography>
                 <Typography gutterBottom>
                     {"説明 : " + spotExplain}
                 </Typography>
@@ -101,6 +104,13 @@ function Spot(spot) {
                 <Typography gutterBottom>
                     {"天気 : " + spotWeather}
                 </Typography>
+                <MuiLink  sx={{display: spotGPS ? "" : "none"}}
+                          href={"https://www.google.com/maps/search/?api=1&query=" + spotGPS.latitude + "," + spotGPS.longitude} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                >
+                  Google Mapで確認
+                </MuiLink>
                 </DialogContent>
         </BootstrapDialog>
 

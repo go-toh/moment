@@ -15,9 +15,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSpotDataState } from "../contexts/SpotDataStateProvider";
-import { useSignInState } from "../contexts/SignInStateProvider";
+import { Link as MuiLink} from '@mui/material';
 import { deleteSpot } from "../src/firebaseFirestore";
 import Image from "next/image";
 
@@ -60,7 +60,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   };
 
 function MyPostListItem(spot) {
-    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime, spotGPS, docID, getImageURL} = spot;
+    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime, spotGPS, docID, getImageURL, spotDateTimeOriginal} = spot;
     const [open, setOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
@@ -127,6 +127,9 @@ function MyPostListItem(spot) {
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                 <Image src={getImageURL}width={340} height={220} /> 
+                <Typography sx={{display: spotDateTimeOriginal ? "" : "none"}} gutterBottom>
+                    {"撮影日時 : " + spotDateTimeOriginal}
+                </Typography>
                 <Typography gutterBottom>
                     {"説明 : " + spotExplain}
                 </Typography>
@@ -142,6 +145,13 @@ function MyPostListItem(spot) {
                 <Typography gutterBottom>
                     {"天気 : " + spotWeather}
                 </Typography>
+                <MuiLink  sx={{display:spotGPS ? "" : "none"}}
+                          href={"https://www.google.com/maps/search/?api=1&query=" + spotGPS.latitude + "," + spotGPS.longitude} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                >
+                  Google Mapで確認
+                </MuiLink>
                 </DialogContent>
         </BootstrapDialog>
         <DeleteDialog />
