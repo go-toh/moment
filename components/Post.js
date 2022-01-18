@@ -17,6 +17,7 @@ import { useSignInState } from "../contexts/SignInStateProvider";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useSpotDataState } from "../contexts/SpotDataStateProvider";
+import exifr from "exifr"
 
 const Input = styled("input")({
   display: "none"
@@ -31,6 +32,8 @@ function Post() {
   const [spotSeason, setSpotSeason] = useState("");
   const [spotTime, setSpotTime] = useState("");
   const [spotWeather, setSpotWeather] = useState("");
+  const [spotGPS, setSpotGPS] = useState("");
+  const [spotDateTimeOriginal, setSpotDateTimeOriginal] = useState("");
   const [isComplete, setIsComplete] = useState(false);
   const { userState } = useSignInState();
   const [open, setOpen] = useState(false);
@@ -49,10 +52,12 @@ function Post() {
     const render = new FileReader();
     render.onload = async() => {
       setSpotImageURL(render.result.toString());
-      
-      console.log(render);
     }
     render.readAsDataURL(files[0]);
+    const exifGPSData = await exifr.gps(files[0]);
+    const exifData = await exifr.parse(files[0]);
+    setSpotDateTimeOriginal(exifData.DateTimeOriginal ? exifData.DateTimeOriginal : "");
+    setSpotGPS(exifGPSData ? exifGPSData : "");
     event.target.value = "";
   }
   const spotTitleHandleChange = (event) => {
@@ -83,8 +88,9 @@ function Post() {
     const createUUID = v4() + ".jpg";
     const nowTime = new Date();
     console.log(createUUID);
+
     uploadSpotImage(spotImageData, createUUID);
-    postNewSpot(userState, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, createUUID, nowTime);
+    postNewSpot(userState, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, createUUID, nowTime, spotGPS, spotDateTimeOriginal);
     setOpen(true);
     setSpotImageURL("");
     setSpotImageData("");
@@ -94,6 +100,8 @@ function Post() {
     setSpotSeason("");
     setSpotTime("");
     setSpotWeather("");
+    setSpotGPS("");
+    setSpotDateTimeOriginal("");
     setIsComplete(false);
     updateSpots();
   }

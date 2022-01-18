@@ -8,16 +8,18 @@ import IconButton from '@mui/material/IconButton';
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import Typography from "@mui/material/Typography";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
-import Skeleton from "@mui/material/Skeleton";
+import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
-import { useEffect, useState } from "react";
-import {ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../src/firebaseConfig";
-import { useSignInState } from "../contexts/SignInStateProvider";
+import { useState, useEffect } from "react";
+import { useSpotDataState } from "../contexts/SpotDataStateProvider";
+import { Link as MuiLink} from '@mui/material';
+import { deleteSpot } from "../src/firebaseFirestore";
+import { deleteSpotImage } from "../src/firebaseStorage";
 import Image from "next/image";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -59,23 +61,23 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   };
 
 function MyPostListItem(spot) {
-    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime} = spot;
+    const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime, spotGPS, docID, getImageURL, spotDateTimeOriginal} = spot;
     const [open, setOpen] = useState(false);
-    const [getImgURL, setGetImgURL] = useState("");
-    
-    const { userState } = useSignInState();
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [displayDateTimeOriginal, setDisplayDateTimeOriginal] = useState("");
+    const { deleteSpotsState } = useSpotDataState();
 
     useEffect(() => {
-        if(userState) {
-            const gsReference = ref(storage, spotImageURL);
-            getDownloadURL(gsReference).then((url) => { setGetImgURL(url) });
-        } else {
-            setGetImgURL("");
-        }
-    }, [userState]);
+      if(spotDateTimeOriginal) {
+        const date = spotDateTimeOriginal.toDate();
+        const time = date.toLocaleString('ja-JP');
+        setDisplayDateTimeOriginal(time);
+      }
+    }, [])
 
     const handleDeleteClick = () => {
-        console.log("click");
+        console.log("deleteClick");
+        setDeleteDialogOpen(true);
     } 
 
     const handleItemClick = () => {
@@ -88,9 +90,39 @@ function MyPostListItem(spot) {
         setOpen(false);
       };
 
-    const CardImage = () => {
-        if(getImgURL) return <Image src={getImgURL}width={340} height={220} /> 
-        else return <Skeleton variant="rectangular" width={340} height={220} animation="wave"/>
+    const handleDeleteDialogClose = () => {
+        setDeleteDialogOpen(false);
+    }
+
+    const deleteSpotButton = () => {
+        deleteSpot(docID);
+        deleteSpotImage(spotImageURL);
+        setDeleteDialogOpen(false);
+        deleteSpotsState(docID)
+    }
+
+    const DeleteDialog = () => {
+      return (
+        <Dialog
+          open={deleteDialogOpen}
+          onClose={handleDeleteDialogClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"スポットを削除しますか?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              削除したスポットを復元することはできません。
+              削除ボタンをクリックすると削除されます。
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={deleteSpotButton}>削除</Button>
+          </DialogActions>
+        </Dialog>
+      )
     }
 
     return (
@@ -104,7 +136,10 @@ function MyPostListItem(spot) {
                     {spotTitle}
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
-                <Image src={getImgURL}width={340} height={220} /> 
+                <Image src={getImageURL}width={340} height={220} /> 
+                <Typography sx={{display: spotDateTimeOriginal ? "" : "none"}} gutterBottom>
+                    {"撮影日時 : " + displayDateTimeOriginal}
+                </Typography>
                 <Typography gutterBottom>
                     {"説明 : " + spotExplain}
                 </Typography>
@@ -120,8 +155,16 @@ function MyPostListItem(spot) {
                 <Typography gutterBottom>
                     {"天気 : " + spotWeather}
                 </Typography>
+                <MuiLink  sx={{display:spotGPS ? "" : "none"}}
+                          href={"https://www.google.com/maps/search/?api=1&query=" + spotGPS.latitude + "," + spotGPS.longitude} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                >
+                  Google Mapで確認
+                </MuiLink>
                 </DialogContent>
         </BootstrapDialog>
+        <DeleteDialog />
         <ListItem
             secondaryAction={
                 <IconButton

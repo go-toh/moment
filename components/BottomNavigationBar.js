@@ -16,7 +16,7 @@ function BottomNavigationBar() {
   };
 
   return (
-    <Paper sx={{ position: "fixed", bottom: 0 , left: 0, right: 0 }} elevation={3}>  
+    <Paper sx={{ position: "fixed", bottom: 0 , left: 0, right: 0, zIndex: 10 }} elevation={3}>  
       <BottomNavigation value={ naviBarState } onChange={ handleChange }>
         <BottomNavigationAction
           label="ホーム"
