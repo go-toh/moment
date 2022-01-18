@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSpotDataState } from "../contexts/SpotDataStateProvider";
 import { Link as MuiLink} from '@mui/material';
 import { deleteSpot } from "../src/firebaseFirestore";
@@ -64,8 +64,16 @@ function MyPostListItem(spot) {
     const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime, spotGPS, docID, getImageURL, spotDateTimeOriginal} = spot;
     const [open, setOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [displayDateTimeOriginal, setDisplayDateTimeOriginal] = useState("");
+    const { deleteSpotsState } = useSpotDataState();
 
-    const { updateSpots } = useSpotDataState();
+    useEffect(() => {
+      if(spotDateTimeOriginal) {
+        const date = spotDateTimeOriginal.toDate();
+        const time = date.toLocaleString('ja-JP');
+        setDisplayDateTimeOriginal(time);
+      }
+    }, [])
 
     const handleDeleteClick = () => {
         console.log("deleteClick");
@@ -90,7 +98,7 @@ function MyPostListItem(spot) {
         deleteSpot(docID);
         deleteSpotImage(spotImageURL);
         setDeleteDialogOpen(false);
-        updateSpots();
+        deleteSpotsState(docID)
     }
 
     const DeleteDialog = () => {
@@ -130,7 +138,7 @@ function MyPostListItem(spot) {
                 <DialogContent dividers>
                 <Image src={getImageURL}width={340} height={220} /> 
                 <Typography sx={{display: spotDateTimeOriginal ? "" : "none"}} gutterBottom>
-                    {"撮影日時 : " + spotDateTimeOriginal}
+                    {"撮影日時 : " + displayDateTimeOriginal}
                 </Typography>
                 <Typography gutterBottom>
                     {"説明 : " + spotExplain}
