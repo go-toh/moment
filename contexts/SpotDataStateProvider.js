@@ -12,7 +12,6 @@ function SpotDataStateProvider({ children }) {
 
     const spotsData = useCallback(async() => {
         const getSpotData = (await getSpots()).docs;
-
         getSpotData.forEach(async(doc) => {
             const getImageURL = await getDownloadURL(ref(storage, doc.data().spotImageURL));
             setSpots((spots) => [...spots, {...doc.data(), docID:doc.id, getImageURL:getImageURL}]);
@@ -27,8 +26,9 @@ function SpotDataStateProvider({ children }) {
         const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         await sleep(2000);
 
-        const getSpotData = (await getSpots()).docs;
+        setSpots([]);
 
+        const getSpotData = (await getSpots()).docs;
         getSpotData.forEach(async(doc) => {
             const getImageURL = await getDownloadURL(ref(storage, doc.data().spotImageURL));
             setSpots((spots) => [...spots, {...doc.data(), docID:doc.id, getImageURL:getImageURL}]);
