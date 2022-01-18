@@ -2,6 +2,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
@@ -140,6 +141,13 @@ function Post() {
             写真を選ぶ
             </Button>
         </label>
+        <Typography sx={{mt: 2}} variant="body2" component="div">
+          {spotDateTimeOriginal.toString()}
+        </Typography>
+        <Typography variant="body2" component="div">
+          {spotGPS.latitude.toString() + " " +spotGPS.longitude.toString()} 
+        </Typography>
+
         <TextField  sx={{ m: 1, width: "300px" }}
                     id="standard-basic"
                     label="タイトル"
