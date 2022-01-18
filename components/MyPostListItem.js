@@ -102,12 +102,12 @@ function MyPostListItem(spot) {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Use Google's location service?"}
+            {"スポットを削除しますか?"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending anonymous
-              location data to Google, even when no apps are running.
+              削除したスポットを復元することはできません。
+              削除ボタンをクリックすると削除されます。
             </DialogContentText>
           </DialogContent>
           <DialogActions>
