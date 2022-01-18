@@ -17,7 +17,7 @@ export const createAccount = async(user) => {
     });
 };
 
-export const postNewSpot = async(user, title, explain, area, season, time, weather, imageURL, nowTime, GPS) => {
+export const postNewSpot = async(user, title, explain, area, season, time, weather, imageURL, nowTime, GPS, dateTimeOriginal) => {
     const newRef = doc(collection(db, "spots"));
     console.log(newRef.id);
     await setDoc(newRef, {
@@ -32,7 +32,8 @@ export const postNewSpot = async(user, title, explain, area, season, time, weath
         spotWeather: weather,
         spotImageURL: imageURL,
         postTime: nowTime,
-        spotGPS: GPS
+        spotGPS: GPS,
+        spotDateTimeOriginal: dateTimeOriginal
     });
 
     await updateDoc(doc(db, "users", user.uid), {

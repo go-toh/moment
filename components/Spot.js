@@ -56,6 +56,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 function Spot(spot) {
     const {spotImageURL, photoURL, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, displayName, postTime, spotGPS, getImageURL, spotDateTimeOriginal} = spot;
     const [displayTime, setDisplayTime] = useState("");
+    const [displayDateTimeOriginal, setDisplayDateTimeOriginal] = useState("");
     const [open, setOpen] = useState(false);
     const clickActionArea = () => {
         setOpen(true);
@@ -69,6 +70,15 @@ function Spot(spot) {
                             + "/" + ("0" + date.getDate()).slice(-2);
         setDisplayTime(time);
     }, [])
+
+    useEffect(() => {
+      if(spotDateTimeOriginal) {
+        const date = spotDateTimeOriginal.toDate();
+        const time = date.toLocaleString('ja-JP');
+        setDisplayDateTimeOriginal(time);
+      }
+      
+  }, [])
     
     const handleClose = () => {
         setOpen(false);
@@ -87,7 +97,7 @@ function Spot(spot) {
                 <DialogContent dividers>
                 <Image src={getImageURL}width={340} height={220} /> 
                 <Typography sx={{display: spotDateTimeOriginal ? "" : "none"}} gutterBottom>
-                    {"撮影日時 : " + spotDateTimeOriginal}
+                    {"撮影日時 : " + displayDateTimeOriginal}
                 </Typography>
                 <Typography gutterBottom>
                     {"説明 : " + spotExplain}
