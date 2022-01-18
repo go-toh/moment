@@ -13,10 +13,7 @@ function SearchPost() {
   const [spotSeason, setSpotSeason] = useState("none");
   const [spotTime, setSpotTime] = useState("none");
   const [spotWeather, setSpotWeather] = useState("none");
-
-  const { filterSpots, exefilterSpots } = useSpotDataState();
-
-  
+  const { setFilterConditions } = useSpotDataState();
   const { setNaviBarState } = useNavigationBarState ();
 
   const spotAreaHandleChange = (event) => {
@@ -36,7 +33,7 @@ function SearchPost() {
   }
 
   const handleClick = () => {
-    exefilterSpots(spotArea, spotSeason, spotTime, spotWeather);
+    setFilterConditions({spotArea, spotSeason, spotTime, spotWeather});
     setNaviBarState("Filter");
   }
 
