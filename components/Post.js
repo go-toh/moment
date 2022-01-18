@@ -56,7 +56,7 @@ function Post() {
     render.readAsDataURL(files[0]);
     const exifGPSData = await exifr.gps(files[0]);
     const exifData = await exifr.parse(files[0]);
-    setSpotDateTimeOriginal(exifData ? exifData.DateTimeOriginal : "");
+    setSpotDateTimeOriginal(exifData.DateTimeOriginal ? exifData.DateTimeOriginal : "");
     setSpotGPS(exifGPSData ? exifGPSData : "");
     event.target.value = "";
   }
@@ -88,6 +88,7 @@ function Post() {
     const createUUID = v4() + ".jpg";
     const nowTime = new Date();
     console.log(createUUID);
+
     uploadSpotImage(spotImageData, createUUID);
     postNewSpot(userState, spotTitle, spotExplain, spotArea, spotSeason, spotTime, spotWeather, createUUID, nowTime, spotGPS, spotDateTimeOriginal);
     setOpen(true);
@@ -102,7 +103,7 @@ function Post() {
     setSpotGPS("");
     setSpotDateTimeOriginal("");
     setIsComplete(false);
-    updateSpots();
+    //updateSpots();
   }
 
   const handleClose = () => {
