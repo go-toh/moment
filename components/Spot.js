@@ -77,7 +77,6 @@ function Spot(spot) {
         const time = date.toLocaleString('ja-JP');
         setDisplayDateTimeOriginal(time);
       }
-      
   }, [])
     
     const handleClose = () => {
