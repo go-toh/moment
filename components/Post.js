@@ -103,7 +103,7 @@ function Post() {
     setSpotGPS("");
     setSpotDateTimeOriginal("");
     setIsComplete(false);
-    //updateSpots();
+    updateSpots();
   }
 
   const handleClose = () => {

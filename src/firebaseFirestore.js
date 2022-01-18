@@ -1,6 +1,5 @@
 import { db } from "./firebaseConfig";
 import { doc, getDoc, getDocs, setDoc, deleteDoc, collection, updateDoc, arrayUnion } from "firebase/firestore";
-import { async } from "@firebase/util";
 
 export const isCreatedAccount = async(uid) => {
     const userDocRef = doc(db, "users", uid);
