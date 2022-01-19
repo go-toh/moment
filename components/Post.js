@@ -35,6 +35,8 @@ function Post() {
   const [spotWeather, setSpotWeather] = useState("");
   const [spotGPS, setSpotGPS] = useState("");
   const [spotDateTimeOriginal, setSpotDateTimeOriginal] = useState("");
+  const [displayText, setDisplayText] = useState("");
+  const [displayTimeText, setDisplayTimeText] = useState("");
   const [isComplete, setIsComplete] = useState(false);
   const { userState } = useSignInState();
   const [open, setOpen] = useState(false);
@@ -47,18 +49,27 @@ function Post() {
     }
   });
 
+  useEffect(() => {
+    console.log(spotDateTimeOriginal);
+    console.log(spotGPS);
+    if(spotGPS && spotDateTimeOriginal) {
+      setDisplayTimeText(spotDateTimeOriginal.toString());
+      setDisplayText(spotGPS.latitude + " " + spotGPS.longitude);
+    }
+  }, [spotGPS, spotDateTimeOriginal])
+
   const uploadImage = async(event) => {
     const { name, files } = event.target;
     setSpotImageData(files[0]);
     const render = new FileReader();
-    render.onload = async() => {
-      setSpotImageURL(render.result.toString());
-    }
-    render.readAsDataURL(files[0]);
     const exifGPSData = await exifr.gps(files[0]);
     const exifData = await exifr.parse(files[0]);
-    setSpotDateTimeOriginal(exifData.DateTimeOriginal ? exifData.DateTimeOriginal : "");
-    setSpotGPS(exifGPSData ? exifGPSData : "");
+    render.onload = () => {
+      setSpotImageURL(render.result.toString());
+      setSpotDateTimeOriginal(exifData.DateTimeOriginal ? exifData.DateTimeOriginal : "");
+      setSpotGPS(exifGPSData ? exifGPSData : "");
+    }
+    render.readAsDataURL(files[0]);
     event.target.value = "";
   }
   const spotTitleHandleChange = (event) => {
@@ -133,7 +144,6 @@ function Post() {
             <Input
             accept="image/*"
             id="contained-button-file"
-            multiple
             type="file"
             onChange={uploadImage}
             />
@@ -142,10 +152,10 @@ function Post() {
             </Button>
         </label>
         <Typography sx={{mt: 2}} variant="body2" component="div">
-          {spotDateTimeOriginal.toString()}
+          {displayTimeText}
         </Typography>
         <Typography variant="body2" component="div">
-          {spotGPS.latitude.toString() + " " +spotGPS.longitude.toString()} 
+          {displayText} 
         </Typography>
 
         <TextField  sx={{ m: 1, width: "300px" }}
