@@ -10,7 +10,6 @@ import { uploadSpotImage } from "../src/firebaseStorage";
 import { postNewSpot } from "../src/firebaseFirestore";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { async } from "@firebase/util";
 import Skeleton from "@mui/material/Skeleton";
 import MenuItem from "@mui/material/MenuItem";
 import { v4 } from "uuid"
@@ -18,7 +17,7 @@ import { useSignInState } from "../contexts/SignInStateProvider";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useSpotDataState } from "../contexts/SpotDataStateProvider";
-import exifr from "exifr"
+import loadImage from "blueimp-load-image";
 
 const Input = styled("input")({
   display: "none"
@@ -50,26 +49,50 @@ function Post() {
   });
 
   useEffect(() => {
-    console.log(spotDateTimeOriginal);
-    console.log(spotGPS);
-    if(spotGPS && spotDateTimeOriginal) {
-      setDisplayTimeText(spotDateTimeOriginal.toString());
+    if(spotGPS) {
+      console.log(spotGPS);
       setDisplayText(spotGPS.latitude + " " + spotGPS.longitude);
+    }
+    if(spotDateTimeOriginal) {
+      console.log(spotDateTimeOriginal);
+      setDisplayTimeText(spotDateTimeOriginal.toString())
     }
   }, [spotGPS, spotDateTimeOriginal])
 
   const uploadImage = async(event) => {
-    const { name, files } = event.target;
-    setSpotImageData(files[0]);
+    const { _, files } = event.target;
     const render = new FileReader();
-    const exifGPSData = await exifr.gps(files[0]);
-    const exifData = await exifr.parse(files[0]);
     render.onload = () => {
       setSpotImageURL(render.result.toString());
-      setSpotDateTimeOriginal(exifData.DateTimeOriginal ? exifData.DateTimeOriginal : "");
-      setSpotGPS(exifGPSData ? exifGPSData : "");
     }
     render.readAsDataURL(files[0]);
+
+    const data = await loadImage(files[0], {
+      maxWidth: 600,
+      meta: true,
+      canvas: true
+    })
+
+    data.image.toBlob((blob => {
+      setSpotImageData(blob);
+    }))
+
+    const exifIFD = data.exif.get("Exif");
+    const getTime = exifIFD.get("DateTimeOriginal").split(" ");
+    const dateTime = getTime[0].replace(":", "/").replace(":", "/") + " " + getTime[1];
+    const createDate = new Date(dateTime);
+    setSpotDateTimeOriginal(createDate);
+
+    const gpsInfo = data.exif.get("GPSInfo");
+    const gpsLatitude = gpsInfo.get("GPSLatitude");
+    const gpsLongitude = gpsInfo.get("GPSLongitude");
+    const lat_60 = gpsLatitude[0] + "°" + gpsLatitude[1] + "'" + gpsLatitude[2] +  "\"" + gpsInfo.get('GPSLatitudeRef');
+    const lng_60 = gpsLongitude[0] + "°" + gpsLongitude[1] + "'" + gpsLongitude[2] + "\"" + gpsInfo.get('GPSLongitudeRef');
+    setSpotGPS({
+      latitude: lat_60,
+      longitude: lng_60
+    })
+
     event.target.value = "";
   }
   const spotTitleHandleChange = (event) => {
