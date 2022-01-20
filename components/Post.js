@@ -165,7 +165,6 @@ function Post() {
         <ImageDisplay />
         <label htmlFor="contained-button-file" id="upload">
             <Input
-            accept="image/*"
             id="contained-button-file"
             type="file"
             onChange={uploadImage}
