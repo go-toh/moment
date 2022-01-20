@@ -68,7 +68,7 @@ function Post() {
     render.readAsDataURL(files[0]);
 
     const data = await loadImage(files[0], {
-      maxWidth: 600,
+      maxWidth: 700,
       meta: true,
       canvas: true
     })

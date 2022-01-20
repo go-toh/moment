@@ -35,9 +35,9 @@ export const postNewSpot = async(user, title, explain, area, season, time, weath
         spotDateTimeOriginal: dateTimeOriginal
     });
 
-    await updateDoc(doc(db, "users", user.uid), {
-        postList: arrayUnion(newRef.id)
-    });
+    //await updateDoc(doc(db, "users", user.uid), {
+    //    postList: arrayUnion(newRef.id)
+    //});
 }
 
 export const getSpots = async() => {
