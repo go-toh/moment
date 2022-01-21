@@ -206,9 +206,7 @@ function Post() {
               id="grouped-basho-select"
               label="Grouping"
             >
-              <MenuItem value="none">
-                <em>なし</em>
-              </MenuItem>
+              
               <MenuItem value={"北海道"}>北海道</MenuItem>
               <MenuItem value={"青森県"}>青森県</MenuItem>
               <MenuItem value={"岩手県"}>岩手県</MenuItem>
@@ -267,9 +265,7 @@ function Post() {
               id="grouped-kisetsu-select"
               label="Grouping"
             >
-              <MenuItem value="none">
-                  <em>なし</em>
-              </MenuItem>
+
               <MenuItem value={"春"}>春</MenuItem>
               <MenuItem value={"夏"}>夏</MenuItem>
               <MenuItem value={"秋"}>秋</MenuItem>
@@ -287,9 +283,7 @@ function Post() {
               id="grouped-jikantai-select"
               label="Grouping"
             >
-              <MenuItem value="none">
-                <em>なし</em>
-              </MenuItem>
+
               <MenuItem value={"朝"}>朝</MenuItem>
               <MenuItem value={"昼"}>昼</MenuItem>
               <MenuItem value={"夕"}>夕</MenuItem>
@@ -305,9 +299,7 @@ function Post() {
               id="grouped-tenki-select"
               label="Grouping"
             >
-              <MenuItem value="none">
-                <em>なし</em>
-              </MenuItem>
+              
               <MenuItem value={"晴れ"}>晴れ</MenuItem>
               <MenuItem value={"曇り"}>曇り</MenuItem>
               <MenuItem value={"雨"}>雨</MenuItem>
