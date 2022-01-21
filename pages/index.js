@@ -20,7 +20,7 @@ export default function Index() {
       </Head>
       
       <ThemeProvider theme={LoginTopFont}>
-        <Typography sx={{display: "flex", justifyContent: "center", mt: "100px", color: "#5094cc" }} variant="h1">
+        <Typography sx={{display: "flex", justifyContent: "center", mt: "100px", color: "#5094cc", fontSize: 75}} >
           MOMENT
         </Typography>
       </ThemeProvider>
