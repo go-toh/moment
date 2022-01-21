@@ -16,4 +16,11 @@ const theme = createTheme({
   },
 });
 
+export const LoginTopFont = createTheme({
+  typography: {
+    fontFamily: [
+      'anton'
+    ].join(','),
+},});
+
 export default theme;
