@@ -19,7 +19,8 @@ const theme = createTheme({
 export const LoginTopFont = createTheme({
   typography: {
     fontFamily: [
-      'Lucida Bright'
+      'Lucida Bright',
+      'anton'
     ].join(','),
 },});
 
