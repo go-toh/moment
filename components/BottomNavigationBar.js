@@ -3,12 +3,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import Paper from '@mui/material/Paper';
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import Paper from "@mui/material/Paper";
 import { useNavigationBarState  } from "../contexts/NavigationBarStateProvider";
 
-function BottomAppBar() {
+function BottomNavigationBar() {
   const { naviBarState, setNaviBarState } = useNavigationBarState ();
 
   const handleChange = (event, newValue) => {
@@ -16,30 +16,30 @@ function BottomAppBar() {
   };
 
   return (
-    <Paper sx={{ position: 'fixed', bottom: 0 , left: 0, right: 0 }} elevation={3}>  
+    <Paper sx={{ position: "fixed", bottom: 0 , left: 0, right: 0, zIndex: 10 }} elevation={3}>  
       <BottomNavigation value={ naviBarState } onChange={ handleChange }>
         <BottomNavigationAction
-          label="Home"
+          label="ホーム"
           value="Home"
           icon={<HomeIcon />}
         />
         <BottomNavigationAction
-          label="Serch"
-          value="Serch"
+          label="検索"
+          value="Search"
           icon={<SearchIcon />}
         />
         <BottomNavigationAction
-          label="Post"
+          label="投稿"
           value="Post"
           icon={<AddIcon />}
         />
         <BottomNavigationAction 
-          label="MyPage" 
+          label="インフォ" 
           value="MyPage" 
           icon={<PersonIcon />} 
         />
         <BottomNavigationAction
-          label="Setting" 
+          label="設定" 
           value="Setting" 
           icon={<SettingsIcon />} 
         />
@@ -47,4 +47,4 @@ function BottomAppBar() {
     </Paper>
   )};
 
-export default BottomAppBar;
+export default BottomNavigationBar;

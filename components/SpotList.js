@@ -1,13 +1,14 @@
 import { Box } from "@mui/system";
-import SpotData from "../public/spotData.json";
 import Spot from "./Spot";
+import { useSpotDataState } from "../contexts/SpotDataStateProvider";
 
 function SpotList() {
-    
+    const { spots } = useSpotDataState();
+
     return (
-        <Box sx={{ mx: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <Box sx={{ mx: 2, display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
             {
-                SpotData.map((spot, index) => <Spot key={index}{...spot}/>)
+                spots.map((spot, index)=> <Spot key={index}{...spot} />)
             }
         </Box>
     )
